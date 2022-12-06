@@ -22,7 +22,7 @@ public class Update {
             }
             statement.executeUpdate("update building \n" +
                     "set namee = 'tbq'\n" +
-                    "where id<" + count + 1);
+                    "where id = "  + 1 );
 
 
         } catch (Exception e) {
