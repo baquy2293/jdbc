@@ -10,31 +10,30 @@ public class Delete {
     private static String USER_NAME = "root";
     private static String PASSWORD = "123456";
 
-    public static void delete()  {
-        Connection connection = null;
-        Statement statement = null;
+    public static void delete() {
+        try {
+
+            Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
+            Statement statement = conn.createStatement();
+            statement.executeUpdate("delete from building where id=" + 4);
+            conn.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static Connection getConnection(String dbURL, String userName, String password) {
+        Connection conn = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
-            statement = connection.createStatement();
-            statement.executeUpdate("delete from building where id=" + 6);
-        }catch (Exception e)
-        {
-            e.printStackTrace();
+            conn = DriverManager.getConnection(dbURL, userName, password);
+            System.out.println("connect successfully!");
+        } catch (Exception ex) {
+            System.out.println("connect failure!");
+            ex.printStackTrace();
         }
-        finally {
-           try {
-               statement.close();
-               connection.close();
-           }catch (Exception e)
-           {
-               e.printStackTrace();
-           }
-        }
-
-
-
-
+        return conn;
     }
+
 }
 
